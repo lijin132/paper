@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自动组卷</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'zujuan/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'zujuan/css/signin.css' %}" />
+    <script src="{% static 'zujuan/js/jquery-1.11.3.min.js' %}"></script>
+    <script src="{% static 'zujuan/js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/zujuan">自动组卷系统</a>
+                <a class="navbar-brand" href="/zujuan/qlist">题目列表</a>
+                <a class="navbar-brand" href="/zujuan/atzujuan">自动组卷</a>
+                <a class="navbar-brand" href="/zujuan/qcreate">创建一个新问题</a>
+                <a class="navbar-brand" href="/zujuan/qkg">知识点管理</a>
+                <a class="navbar-brand" href="/zujuan/qdiff">难易度管理</a>
+                <a class="navbar-brand" href="/zujuan/qtype">题目类型管理</a>
+            </div>
+        </nav> <!-- base.html end -->
+        <h3>自动组卷</h3>
+
+        <p>按知识点组卷</p>
+        <p>在下方选择知识点后，点击组卷即可自动组卷</p>
+        <form action="{%  url 'zujuan:atzujuan' %}" method="post" role="form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label class="control-label">知识点选择(按住 ctrl 多选)</label></br>
+                <select multiple class="form-control" name="qkg">
+                    {% for q in qknows %}
+                        <option>{{  q }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">难度选择(默认不选)</label></br>
+                <select class="form-control" name="qdiff">
+                    <option selected="selected">全部</option>
+                    {% for qdiff in qdiffs %}
+                        <option>{{  qdiff }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">提交按知识点组卷</button>
+        </form>
+    </div>
+</body>
+</html>

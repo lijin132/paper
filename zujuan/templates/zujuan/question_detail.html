@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>题目详情</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'zujuan/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'zujuan/css/signin.css' %}" />
+    <script src="{% static 'zujuan/js/jquery-1.11.3.min.js' %}"></script>
+    <script src="{% static 'zujuan/js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/zujuan">自动组卷系统</a>
+                <a class="navbar-brand" href="/zujuan/qlist">题目列表</a>
+                <a class="navbar-brand" href="/zujuan/atzujuan">自动组卷</a>
+                <a class="navbar-brand" href="/zujuan/qcreate">创建一个新问题</a>
+                <a class="navbar-brand" href="/zujuan/qkg">知识点管理</a>
+                <a class="navbar-brand" href="/zujuan/qdiff">难易度管理</a>
+                <a class="navbar-brand" href="/zujuan/qtype">题目类型管理</a>
+            </div>
+        </nav> <!-- base.html end -->
+        <h3>{{ q.qdesc }}</h3>
+        <hr style="width: 100%; color: black; height: 1px; background-color:black;" />
+        <p>类型：{{ q.qtype }}</p>
+        <p> 难度： {{ q.qdiff }}</p>
+        <p> 分数：{{ q.qscore }} </p>
+        <p>知识点： {{ q.qknow }}</p>
+        <p>答案： {{ q.qanswer }}</p>
+        <p><a href="/zujuan/qedit/{{q.qid}}">编辑</a></p>
+        <a href="/zujuan/delete/q/{{q.qid}}">删除本条记录(不可恢复)</a>
+    </div>
+</body>
+</html>

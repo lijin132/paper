@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改问题</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'zujuan/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'zujuan/css/signin.css' %}" />
+    <script src="{% static 'zujuan/js/jquery-1.11.3.min.js' %}"></script>
+    <script src="{% static 'zujuan/js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/zujuan">自动组卷系统</a>
+                <a class="navbar-brand" href="/zujuan/qlist">题目列表</a>
+                <a class="navbar-brand" href="/zujuan/atzujuan">自动组卷</a>
+                <a class="navbar-brand" href="/zujuan/qcreate">创建一个新问题</a>
+                <a class="navbar-brand" href="/zujuan/qkg">知识点管理</a>
+                <a class="navbar-brand" href="/zujuan/qdiff">难易度管理</a>
+                <a class="navbar-brand" href="/zujuan/qtype">题目类型管理</a>
+            </div>
+        </nav> <!-- base.html end -->
+        <h3>修改问题</h3>
+        <form action="{%  url 'zujuan:qedit' q.qid %}" method="post" role="form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="control-label">问题类型 <small><a href="/zujuan/qtype">新建类型</a></small></label></br>
+                <select class="form-control" name="qtype">
+                    {% for qt in qtypes %}
+                        {% if q.qtype == qt %}
+                        <option selected="selected">{{ qt }}</option>
+                        {% else %}
+                        <option>{{ qt }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">问题难度 <small><a href="/zujuan/qdiff">新建难度分类</a></small></label></br>
+                <select class="form-control" name="qdiff">
+                    {% for qdiff in qdiffs %}
+                        {% if q.qdiff == qdiff %}
+                            <option selected="selected">{{ qdiff }}</option>
+                        {% else %}
+                            <option>{{ qdiff }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">问题分数</label></br>
+                <input type="text" name="qscore" value={{ q.qscore }}>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">问题知识点(按住 ctrl 可多选) <small><a href="/zujuan/qkgp">新建知识点</a></small></label></br>
+                <select multiple class="form-control" name="qkg">
+                    {% for s in selected %}
+                        <option selected="selected">{{ s }}</option>
+                    {% endfor %}
+                    {% for s in unselect %}
+                        <option >{{ s }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">问题题干</label></br>
+                <textarea rows="6" cols="150" name="qdesc">
+                    {{ q.qdesc }}
+                </textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">问题答案</label></br>
+                <textarea rows="6" cols="150" name="qanswer">
+                    {{ q.qanswer }}
+                </textarea>
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">提交系统</button>
+        </form>
+    </div>
+</body>
+</html>
